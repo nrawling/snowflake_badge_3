@@ -11,6 +11,7 @@ def homepage():
     cur = cnx.cursor().execute("SELECT COLOR_NAME, COUNT(*) " +
         "FROM COLORS " +
         "GROUP BY COLOR_NAME "+
+        "HAVING COUNT(*) > 50 "+
         "ORDER BY COUNT(*) DESC;")
     rows=pd.DataFrame(cur.fetchall(),columns=['Color Name','Votes'])
     dfhtml = rows.to_html(index=False)
@@ -29,6 +30,16 @@ def thanks4submit():
     return render_template("thanks4submit.html"
                            ,colorname=colorname
                            ,username=username)
+
+@app.route('/coolcharts')
+def coolcharts():
+    cur = cnx.cursor().execute("SELECT COLOR_NAME, COUNT(*) " 
+                               "FROM COLORS " 
+                               "GROUP BY COLOR_NAME ORDER BY COUNT(*) DESC;")
+    data4Charts = pd.DataFrame(cur.fetchall(), columns=['color', 'votes'])
+    data4Charts.to_csv('data4charts.csv',index=False)
+    data4ChartsJSON = data4Charts.to_json("data4ChartsJSON.json", orient='records')
+    return render_template("coolcharts.html")
 
 # Snowflake
 cnx = sfconnect()

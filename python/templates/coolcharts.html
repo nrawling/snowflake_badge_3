@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cool Color Charts</title>
+    <meta charset="utf-8" />
+
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.18.2"></script>
+
+    <style media="screen">
+      /* Add space between Vega-Embed links  */
+      .vega-actions a {
+        margin-right: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>The Most Popular Colors</h1>
+    <!-- Container for the visualization -->
+    <div id="vis"></div>
+
+    <script>
+      // Assign the specification to a local variable vlSpec.
+      var vlSpec = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "values": [
+{"color":"Indigo","votes":94},{"color":"Red","votes":69},{"color":"Yellow","votes":60},{"color":"Aquamarine","votes":59},{"color":"Violet","votes":58},{"color":"Orange","votes":55},{"color":"Fuchsia","votes":54},{"color":"Blue","votes":52},{"color":"Olive","votes":52},{"color":"Plum","votes":51},{"color":"Teal","votes":51},{"color":"Pink","votes":51},{"color":"Khaki","votes":50},{"color":"Green","votes":50},{"color":"Coral","votes":49},{"color":"Goldenrod","votes":48},{"color":"Turquoise","votes":46},{"color":"Maroon","votes":45},{"color":"Puce","votes":2},{"color":"Honeydew","votes":1},{"color":"Beige","votes":1},{"color":"Mint Green","votes":1},{"color":"Tweed","votes":1},{"color":"Sienna","votes":1},{"color":"Bogus","votes":1}
+    ]
+  },
+  "mark": "point",
+  "encoding": {
+    "x":{"field":"votes", "type": "quantitative"},
+    "y":{"field":"color", "type":"nominal"}
+  }
+      };
+
+      // Embed the visualization in the container with id `vis`
+      vegaEmbed('#vis', vlSpec);
+    </script>
+  </body>
+</html>
