@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from snowflake import connector
 import keyring
 import pandas as pd
@@ -8,6 +8,20 @@ app = Flask("my website")
 @app.route('/')
 def homepage():
     return render_template("index.html", dfhtml=dfhtml)
+
+@app.route('/submit')
+def submitpage():
+    return render_template('submit.html')
+
+@app.route('/thanks4submit', methods=["POST"])
+def thanks4submit():
+    colorname = request.form.get("cname")
+    username = request.form.get("uname")
+    cnx.cursor().execute("INSERT INTO COLORS(COLOR_UID, COLOR_NAME) " +
+        "SELECT COLOR_UID_SEQ.nextval, '" + colorname + "'")
+    return render_template("thanks4submit.html"
+                           ,colorname=colorname
+                           ,username=username)
 
 # Snowflake
 cnx = connector.connect(
