@@ -23,16 +23,15 @@ ingredients_list = st.multiselect(
     , max_selections=5
 )
 
-# New section to display smoothiefroot nutrition information
 import requests  
-smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")  
-sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
 
 if ingredients_list:
 
     ingredients_string = ''
     for fruit_chosen in ingredients_list:
         ingredients_string += fruit_chosen + ' '
+        smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")  
+sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)  
 
     my_insert_stmt = """ insert into smoothies.public.orders(ingredients,name_on_order)
                     values ('""" + ingredients_string + """','""" + name_on_order + """')"""
